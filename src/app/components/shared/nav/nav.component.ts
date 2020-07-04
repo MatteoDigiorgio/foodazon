@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalVars } from 'src/app/config/api';
 
 @Component({
   selector: 'app-nav',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
+  isLogged = GlobalVars.isLogged;
+  isMerchant = GlobalVars.isMerchant;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+
 }
+
+

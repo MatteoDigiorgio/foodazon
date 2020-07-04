@@ -21,8 +21,10 @@ exports.user_signup = (req, res, next) => {
           } else {
             const user = new User({
               _id: new mongoose.Types.ObjectId(),
+              username: req.body.username,
               email: req.body.email,
-              password: hash
+              password: hash,
+              isMerchant: req.body.isMerchant
             });
             user
               .save()
@@ -70,6 +72,7 @@ exports.user_login = (req, res, next) => {
             })
           return res.status(200).json({
             message: 'Auth successful',
+            userId: user[0]._id,
             token: token
           })
         }

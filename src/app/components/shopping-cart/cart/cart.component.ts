@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalVars } from 'src/app/config/api';
 
 import { MessengerService } from 'src/app/services/messenger.service';
 import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
 import { CartItem } from 'src/app/models/cart-item';
+
 
 @Component({
   selector: 'app-cart',
@@ -15,6 +17,8 @@ export class CartComponent implements OnInit {
   cartItems = [];
 
   cartTotal = 0;
+
+  isLogged = GlobalVars.isLogged;
 
   constructor(
     private msg: MessengerService,

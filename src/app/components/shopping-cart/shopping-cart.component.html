@@ -3,11 +3,11 @@
     <app-filters></app-filters>
   </div> -->
 
-  <div class="col-sm-10">
+  <div class="col">
     <app-product-list></app-product-list>
   </div>
 
-  <div class="col">
+  <div *ngIf="isLogged" class="col-sm-2">
     <app-cart></app-cart>
   </div>
 </div>

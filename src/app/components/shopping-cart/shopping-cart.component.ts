@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalVars } from 'src/app/config/api';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShoppingCartComponent implements OnInit {
 
+  isLogged = GlobalVars.isLogged;
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
 
 }

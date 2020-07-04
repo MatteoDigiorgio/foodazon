@@ -3,7 +3,8 @@
 <div *ngIf="cartItems.length > 0" class="list-group">
   <div class="list-group-item" *ngFor="let item of cartItems">
     <app-cart-item [cartItem]="item" (increaseCartItemQty)="onIncreaseCartItemQty($event)"
-      (decreaseCartItemQty)="onDecreaseCartItemQty($event)" (deleteCartItem)="onDeleteCartItem($event)"></app-cart-item>
+      (decreaseCartItemQty)="onDecreaseCartItemQty($event)" (deleteCartItem)="onDeleteCartItem($event)">
+    </app-cart-item>
   </div>
 
   <div class="list-group-item active card-header">
