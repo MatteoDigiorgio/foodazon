@@ -4,8 +4,8 @@
   </h5>
   <nav class="my-2 my-md-0 mr-md-3">
     <a class="p-2 text-dark" [routerLink]="['/shop']">Shop</a>
-    <a *ngIf="isLogged" class="p-2 text-dark" [routerLink]="['/orders']">Orders</a>
-    <a *ngIf="isLogged && isMerchant" class="p-2 text-dark" [routerLink]="['/addproduct']">Sell Product</a>
+    <a *ngIf="!isLogged" class="p-2 text-dark" [routerLink]="['/orders']">Orders</a>
+    <a *ngIf="!isLogged && !isMerchant" class="p-2 text-dark" [routerLink]="['/addproduct']">Sell Product</a>
   </nav>
   <a *ngIf="!isLogged" class="btn btn-primary" [routerLink]="['/register']">Sign up</a>
   <a *ngIf="!isLogged" class="ml-2 btn btn-outline-secondary" [routerLink]="['/login']">Login</a>

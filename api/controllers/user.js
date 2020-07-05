@@ -51,15 +51,15 @@ exports.user_login = (req, res, next) => {
     .exec()
     .then(user => {
       if (user.length < 1) {
-        return res.status(401).json({
+        return res.json({
           message: 'Auth failed'
-        })
+        }).status(401)
       }
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
         if (err) {
-          return res.status(401).json({
+          return res.json({
             message: 'Auth failed'
-          })
+          }).status(401)
         }
         if (result) {
           const token = jwt.sign({
@@ -70,22 +70,23 @@ exports.user_login = (req, res, next) => {
             {
               expiresIn: '1h'
             })
-          return res.status(200).json({
+          return res.json({
             message: 'Auth successful',
             userId: user[0]._id,
+            isMerchant: user[0].isMerchant,
             token: token
-          })
+          }).status(200)
         }
-        return res.status(401).json({
+        return res.json({
           message: 'Auth failed'
-        })
+        }).status(401)
       })
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({
+      res.json({
         error: err
-      });
+      }).status(500);
     });
 }
 
