@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-sm offset-sm">
+    <div class="guest-form-card card">
+
+      <div class="card-header text-center">
+        <h2>Remove a Product</h2>
+      </div>
+
+      <div class="card-body">
+        <form #deleteProductForm="ngForm" (ngSubmit)="deleteProductForm.valid && delete()">
+
+          <div class="form-group">
+            <label for="productCode">Product Code</label>
+            <input id="productCode" class="form-control"
+              [ngClass]="{ 'is-invalid': productCode.touched && productCode.invalid }" name="productCode"
+              #productCode="ngModel" [(ngModel)]="model.productCode" required />
+            <span class="invalid-feedback">Product Code can't be blank.</span>
+            <span class="invalid-feedback">Can't remove this product.</span>
+          </div>
+
+          <button class="btn btn-danger btn-block" [disabled]="deleteProductForm.invalid">Remove</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div>
+
+  </div>
+</div>

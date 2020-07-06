@@ -13,6 +13,14 @@ export class ShoppingCartComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    let check = JSON.parse(sessionStorage.getItem("check"));
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    if (check === "Auth successful") {
+      if (user.isMerchant) {
+        GlobalVars.isMerchant = true;
+      }
+      GlobalVars.isLogged = true;
+    }
   }
 
 

@@ -18,16 +18,13 @@ export class ProductItemComponent implements OnInit {
   isLogged = GlobalVars.isLogged;
 
   constructor(
-    private msg: MessengerService,
-    //private cartService: CartService
+    private msg: MessengerService
   ) { }
 
   ngOnInit(): void {
   }
 
   handleAddToCart() {
-    // this.cartService.addProductToCart(this.productItem).subscribe(() => {
-    // })
     this.msg.sendMsg(this.productItem);
   }
 

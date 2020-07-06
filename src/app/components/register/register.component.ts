@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 import { UserService } from 'src/app/services/user.service';
 import { GlobalVars } from 'src/app/config/api';
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.buildForm();
   }
 

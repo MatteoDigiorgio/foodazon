@@ -14,32 +14,16 @@ const storage = multer.diskStorage({
   }
 })
 
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
-    //reject a file
-    cb(null, false);
-  } else {
-    //store a file
-    cb(null, true);
-  }
-}
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  fileFilter: fileFilter
-});
+const upload = multer({ storage: storage })
 
 router.get('/', ProductsController.products_get_all);
 
-router.post('/', checkAuth, upload.single('productImage'), ProductsController.products_create_product);
+router.post('/', upload.single('file'), checkAuth, ProductsController.products_create_product);
 
 router.get('/:productId', ProductsController.products_get_product);
 
-router.patch('/:productId', checkAuth, ProductsController.products_update_product);
+router.patch('/:productId', ProductsController.products_update_product);
 
-router.delete('/:productId', checkAuth, ProductsController.products_delete_product);
+router.delete('/:productId', ProductsController.products_delete_product);
 
 module.exports = router;

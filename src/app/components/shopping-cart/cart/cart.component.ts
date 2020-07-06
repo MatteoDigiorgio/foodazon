@@ -21,23 +21,14 @@ export class CartComponent implements OnInit {
   isLogged = GlobalVars.isLogged;
 
   constructor(
-    private msg: MessengerService,
-    //private cartService: CartService
+    private msg: MessengerService
   ) { }
 
   ngOnInit() {
-    // this.loadCartItems();
     this.msg.getMsg().subscribe((product: Product) => {
       this.addProductToCart(product);
     })
   }
-
-
-  // loadCartItems() {
-  //   this.cartService.getCartItems().subscribe((items: CartItem[]) => {
-  //     console.log(items);
-  //   })
-  // }
 
   addProductToCart(product: Product) {
 

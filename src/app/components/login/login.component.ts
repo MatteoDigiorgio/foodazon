@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
+import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { GlobalVars } from 'src/app/config/api';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -14,6 +14,8 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   model: any = {}
+
+  user: User;
 
   authFailed;
 
@@ -29,13 +31,24 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.userService.userLogin(this.model).subscribe(res => {
-      if (res.message === "Auth successful") {
-        GlobalVars.isLogged = true;
-        if (res.isMerchant) {
+      var user = {
+        userId: res.userId,
+        username: res.username,
+        email: res.email,
+        isMerchant: res.isMerchant
+      }
+      var message = res.message
+      sessionStorage.setItem("check", JSON.stringify(message))
+      sessionStorage.setItem("user", JSON.stringify(user))
+      sessionStorage.setItem("Authorization", JSON.stringify(res.token))
+
+      if (message === "Auth successfum") {
+        if (user.isMerchant) {
           GlobalVars.isMerchant = true;
         }
+        GlobalVars.isLogged = true;
         this.router.navigate(['/shop']);
-      } else if (res.message === "Auth failed") {
+      } else if (message === "Auth failed") {
         this.authFailed = true;
       }
     })

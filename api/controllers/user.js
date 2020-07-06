@@ -7,8 +7,8 @@ const User = require('../models/user');
 exports.user_signup = (req, res, next) => {
   User.find({ email: req.body.email })
     .exec()
-    .then(user => {
-      if (user.length >= 1) {
+    .then(userDoc => {
+      if (userDoc.length >= 1) {
         return res.status(409).json({
           message: 'Mail used'
         })
@@ -19,19 +19,26 @@ exports.user_signup = (req, res, next) => {
               error: err
             });
           } else {
+            const token = jwt.sign({
+              email: userDoc.email,
+              userId: userDoc._id
+            },
+              process.env.JWT_KEY
+            );
             const user = new User({
               _id: new mongoose.Types.ObjectId(),
               username: req.body.username,
               email: req.body.email,
               password: hash,
-              isMerchant: req.body.isMerchant
+              isMerchant: req.body.isMerchant,
+              token: token
             });
             user
               .save()
               .then(result => {
                 console.log(result);
                 res.status(201).json({
-                  message: 'User created'
+                  token: result.token
                 })
               })
               .catch(err => {
@@ -62,19 +69,13 @@ exports.user_login = (req, res, next) => {
           }).status(401)
         }
         if (result) {
-          const token = jwt.sign({
-            email: user[0].email,
-            userId: user[0]._id
-          },
-            process.env.JWT_KEY,
-            {
-              expiresIn: '1h'
-            })
           return res.json({
             message: 'Auth successful',
             userId: user[0]._id,
+            username: user[0].username,
+            email: user[0].email,
             isMerchant: user[0].isMerchant,
-            token: token
+            token: user[0].token
           }).status(200)
         }
         return res.json({
@@ -105,3 +106,4 @@ exports.user_delete = (req, res, next) => {
       });
     });
 }
+
