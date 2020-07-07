@@ -38,6 +38,12 @@ exports.user_signup = (req, res, next) => {
               .then(result => {
                 console.log(result);
                 res.status(201).json({
+                  message: 'Auth successful',
+                  _id: result._id,
+                  username: result.username,
+                  email: result.email,
+                  password: result.password,
+                  isMerchant: result.isMerchant,
                   token: result.token
                 })
               })

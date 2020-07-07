@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { MessengerService } from 'src/app/services/messenger.service';
-import { CartService } from 'src/app/services/cart.service';
-import { GlobalVars } from 'src/app/config/api';
+import { isLogged$, isMerchant$ } from 'src/app/config/api';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-product-item',
@@ -15,13 +15,26 @@ export class ProductItemComponent implements OnInit {
 
   URL = 'http://localhost:3000/';
 
-  isLogged = GlobalVars.isLogged;
+  isLogged = false;
+  isMerchant = false;
 
   constructor(
-    private msg: MessengerService
+    private msg: MessengerService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit() {
+    isLogged$.subscribe(result => {
+      this.isLogged = result;
+      this.ref.detectChanges();
+    });
+    isMerchant$.subscribe(result => {
+      this.isMerchant = result;
+      this.ref.detectChanges();
+    });
   }
 
   handleAddToCart() {

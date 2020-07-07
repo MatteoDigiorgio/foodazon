@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
-import { GlobalVars } from 'src/app/config/api';
+import { isLogged$, isMerchant$ } from 'src/app/config/api';
 
 
 @Component({
@@ -44,9 +44,9 @@ export class LoginComponent implements OnInit {
 
       if (message === "Auth successfum") {
         if (user.isMerchant) {
-          GlobalVars.isMerchant = true;
+          isMerchant$.next(true);
         }
-        GlobalVars.isLogged = true;
+        isLogged$.next(true);
         this.router.navigate(['/shop']);
       } else if (message === "Auth failed") {
         this.authFailed = true;

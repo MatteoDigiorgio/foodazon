@@ -103,11 +103,13 @@ exports.products_get_product = (req, res, next) => {
 
 exports.products_update_product = (req, res, next) => {
   const id = req.params.productId;
-  const updateOps = {};
-  for (const ops of req.body) {
-    updateOps[ops.propName] = ops.value;
-  }
-  Product.update({ _id: id }, { $set: updateOps })
+  Product.update({ _id: id }, {
+    $set: {
+      name: req.body.name,
+      price: req.body.price,
+      description: req.body.description
+    }
+  })
     .exec()
     .then(result => {
       res.status(200).json({

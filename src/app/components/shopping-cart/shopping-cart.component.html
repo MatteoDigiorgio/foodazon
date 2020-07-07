@@ -4,7 +4,7 @@
     <app-product-list></app-product-list>
   </div>
 
-  <div *ngIf="isLogged" class="col-sm-2">
+  <div *ngIf="isLogged && !isMerchant" class="col-sm-2">
     <app-cart></app-cart>
   </div>
 </div>
