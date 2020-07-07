@@ -7,7 +7,6 @@ var bodyParser = require('body-parser')
 var path = require('path');
 
 var productRoutes = require('./api/routes/products');
-var cartRoutes = require('./api/routes/cart');
 var orderRoutes = require('./api/routes/orders');
 var userRoutes = require('./api/routes/user');
 
@@ -25,7 +24,6 @@ app.use(function (req, res, next) {
 });
 
 app.use('/products', productRoutes);
-app.use('/cart', cartRoutes);
 app.use('/orders', orderRoutes);
 app.use('/user', userRoutes);
 app.use('/uploads', express.static('uploads'));

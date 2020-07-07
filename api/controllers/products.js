@@ -103,7 +103,7 @@ exports.products_get_product = (req, res, next) => {
 
 exports.products_update_product = (req, res, next) => {
   const id = req.params.productId;
-  Product.update({ _id: id }, {
+  Product.updateOne({ _id: id }, {
     $set: {
       name: req.body.name,
       price: req.body.price,

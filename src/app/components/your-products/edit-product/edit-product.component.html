@@ -45,7 +45,7 @@
               <label for="description">Description</label>
               <input id="description" class="form-control"
                 [ngClass]="{ 'is-invalid': editProductForm.get('description').touched && editProductForm.get('description').invalid }"
-                formControlName="description" value="editProductForm.get('decription')" />
+                formControlName="description" value="editProductForm.get('description')" />
               <span class="invalid-feedback">
                 <span *ngIf="editProductForm.get('description').hasError('required')">Email can't be blank.</span>
               </span>
