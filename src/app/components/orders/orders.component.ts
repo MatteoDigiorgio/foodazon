@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { isLogged$, isMerchant$ } from 'src/app/config/api';
+import { Order } from 'src/app/models/order';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-orders',
@@ -12,9 +14,12 @@ export class OrdersComponent implements OnInit {
   isLogged = false;
   isMerchant = false;
 
-  orders = [];
+  orderList: Order[] = [];
 
-  constructor(private ref: ChangeDetectorRef) { }
+  constructor(
+    private ref: ChangeDetectorRef,
+    private orderService: OrderService
+  ) { }
 
   ngOnInit(): void {
     let check = JSON.parse(sessionStorage.getItem("check"));
@@ -25,6 +30,8 @@ export class OrdersComponent implements OnInit {
       }
       isLogged$.next(true);
     }
+
+    this.getOrdersFromDatabase();
   }
 
   ngAfterViewInit() {
@@ -36,5 +43,11 @@ export class OrdersComponent implements OnInit {
       this.isMerchant = result;
       this.ref.detectChanges();
     });
+  }
+
+  getOrdersFromDatabase() {
+    this.orderService.getProducts().subscribe((orders) => {
+      this.orderList = orders['orders'];
+    })
   }
 }

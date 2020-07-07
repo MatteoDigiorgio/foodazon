@@ -4,6 +4,8 @@ import { ChangeDetectorRef } from '@angular/core';
 
 import { MessengerService } from 'src/app/services/messenger.service';
 import { Product } from 'src/app/models/product';
+import { OrderService } from 'src/app/services/order.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,7 +25,9 @@ export class CartComponent implements OnInit {
 
   constructor(
     private msg: MessengerService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private orderService: OrderService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -60,7 +64,9 @@ export class CartComponent implements OnInit {
         productId: product._id,
         productName: product.name,
         qty: 1,
-        price: product.price
+        price: product.price,
+        merchantId: product.merchant_id,
+        status: "In Treatment"
       });
     }
     this.calcCartTotal();
@@ -87,7 +93,6 @@ export class CartComponent implements OnInit {
 
 
   calcCartTotal() {
-    console.log(this.cartItems)
     this.cartTotal = 0;
     this.cartItems.forEach(item => {
       this.cartTotal += (item.qty * item.price);
@@ -95,7 +100,14 @@ export class CartComponent implements OnInit {
   }
 
   createOrder() {
-
+    console.log(this.cartItems)
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    var order = {
+      products: this.cartItems,
+      userId: user.userId
+    }
+    this.orderService.createOrder(order).subscribe();
+    this.router.navigate(['/orders']);
   }
 }
 
