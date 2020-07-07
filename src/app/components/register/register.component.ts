@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
   register() {
     this.userService.userRegistration(this.registerForm.value).subscribe(res => {
       var user = {
-        userId: res.userId,
+        userId: res._id,
         username: res.username,
         email: res.email,
         isMerchant: res.isMerchant

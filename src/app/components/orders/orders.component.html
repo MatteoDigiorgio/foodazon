@@ -1,7 +1,7 @@
-<div *ngIf="orders.length === 0" class="alert alert-info">No Orders</div>
+<div *ngIf="orderList.length === 0" class="alert alert-info">No Orders</div>
 
-<div *ngIf="orders.length > 0" class="list-group">
-  <div class="orders" *ngFor="let order of orders">
+<div *ngIf="orderList.length > 0" class="list-group">
+  <div class="orders" *ngFor="let order of orderList">
     <app-orders></app-orders>
   </div>
 </div>

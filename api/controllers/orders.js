@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Order = require('../models/order');
-const Product = require('../models/product');
 
 exports.orders_get_all = (req, res, next) => {
   Order.find()
@@ -14,11 +13,7 @@ exports.orders_get_all = (req, res, next) => {
           return {
             _id: doc._id,
             product: doc.product,
-            quantity: doc.quantity,
-            request: {
-              type: 'GET',
-              url: 'http://localhost:3000/orders/' + doc._id
-            }
+            quantity: doc.quantity
           }
         })
       });
@@ -31,29 +26,17 @@ exports.orders_get_all = (req, res, next) => {
 }
 
 exports.orders_create_order = (req, res, next) => {
-  Product.findById(req.body.productId)
-    .then(product => {
-      const order = new Order({
-        _id: mongoose.Types.ObjectId(),
-        quantity: req.body.quantity,
-        product: req.body.productId
-      });
-      return order.save();
-    })
+  const order = new Order({
+    _id: mongoose.Types.ObjectId(),
+    products: req.body.products,
+    userId: req.body.userId
+  })
+  order
+    .save()
     .then(result => {
-      console.log(result);
-      res.status(201).json({
-        message: 'Order stored',
-        createdOrder: {
-          _id: result._id,
-          product: result.product,
-          quantity: result.quantity
-        },
-        request: {
-          type: 'GET',
-          url: 'http://localhost:3000/orders/' + result._id
-        }
-      });
+      res.json({
+        message: "ok"
+      }).status(200)
     })
     .catch(err => {
       console.log(err);

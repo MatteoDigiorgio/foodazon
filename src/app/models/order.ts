@@ -1,14 +1,9 @@
-import { Observable } from 'rxjs';
-import { Product } from './product';
-
 export class Order {
-  id: number;
   products: [];
-  status: string;
+  userId: string;
 
-  constructor(id: number, products: [], status = "In Treatment") {
-    this.id = id;
+  constructor(products: [], userId) {
     this.products = []
-    this.status = status;
+    this.userId = userId;
   }
 }
