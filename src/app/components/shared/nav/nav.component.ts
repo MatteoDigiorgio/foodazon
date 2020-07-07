@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalVars } from 'src/app/config/api';
+import { isLogged$, isMerchant$ } from 'src/app/config/api';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-nav',
@@ -8,15 +10,24 @@ import { GlobalVars } from 'src/app/config/api';
 })
 export class NavComponent implements OnInit {
 
-  isLogged = GlobalVars.isLogged;
-  isMerchant = GlobalVars.isMerchant;
+  isLogged = false;
+  isMerchant = false;
 
-  constructor() { }
+  constructor(private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
   }
 
-
+  ngAfterViewInit() {
+    isLogged$.subscribe(result => {
+      this.isLogged = result;
+      this.ref.detectChanges();
+    });
+    isMerchant$.subscribe(result => {
+      this.isMerchant = result;
+      this.ref.detectChanges();
+    });
+  }
 }
 
 

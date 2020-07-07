@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalVars } from 'src/app/config/api';
+import { isLogged$, isMerchant$ } from 'src/app/config/api';
+import { ChangeDetectorRef } from '@angular/core';
 
 import { MessengerService } from 'src/app/services/messenger.service';
 import { Product } from 'src/app/models/product';
-import { CartService } from 'src/app/services/cart.service';
-import { CartItem } from 'src/app/models/cart-item';
 
 
 @Component({
@@ -18,26 +17,31 @@ export class CartComponent implements OnInit {
 
   cartTotal = 0;
 
-  isLogged = GlobalVars.isLogged;
+  isLogged = false;
+  isMerchant = false;
+
 
   constructor(
     private msg: MessengerService,
-    //private cartService: CartService
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    // this.loadCartItems();
     this.msg.getMsg().subscribe((product: Product) => {
       this.addProductToCart(product);
     })
   }
 
-
-  // loadCartItems() {
-  //   this.cartService.getCartItems().subscribe((items: CartItem[]) => {
-  //     console.log(items);
-  //   })
-  // }
+  ngAfterViewInit() {
+    isLogged$.subscribe(result => {
+      this.isLogged = result;
+      this.ref.detectChanges();
+    });
+    isMerchant$.subscribe(result => {
+      this.isMerchant = result;
+      this.ref.detectChanges();
+    });
+  }
 
   addProductToCart(product: Product) {
 

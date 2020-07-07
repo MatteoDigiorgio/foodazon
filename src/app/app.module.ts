@@ -19,6 +19,12 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AddProductComponent } from 'src/app/components/your-products/add-product/add-product.component';
+import { RemoveProductComponent } from 'src/app/components/your-products/remove-product/remove-product.component';
+import { EditProductComponent } from 'src/app/components/your-products/edit-product/edit-product.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { YourProductsComponent } from './components/your-products/your-products.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +40,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     ProductItemComponent,
     LoginComponent,
     RegisterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AddProductComponent,
+    RemoveProductComponent,
+    EditProductComponent,
+    OrdersComponent,
+    EditProfileComponent,
+    YourProductsComponent
   ],
   imports: [
     BrowserModule,

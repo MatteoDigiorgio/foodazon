@@ -39,13 +39,14 @@ exports.products_get_all = (req, res, next) => {
 }
 
 exports.products_create_product = (req, res, next) => {
-  console.log(req.file);
+  console.log(req.file)
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
     price: req.body.price,
     description: req.body.description,
-    productImage: req.file.path
+    productImage: req.file.destination + "/" + req.file.filename,
+    merchant_id: req.body.merchant_id
   });
   product
     .save()
@@ -57,36 +58,34 @@ exports.products_create_product = (req, res, next) => {
           _id: result._id,
           name: result.name,
           price: result.price,
-          description: req.body.description,
-          request: {
-            type: 'GET',
-            url: 'http://localhost:3000/products/' + result._id
-          }
+          description: result.description,
+          merchant_id: result.merchant_id
         }
       });
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({
+      res.json({
         error: err
-      });
+      }).status(500);
     });
+
 }
 
 exports.products_get_product = (req, res, next) => {
   const id = req.params.productId;
   Product.findById(id)
-    .select(' name description price _id productImage ')
+    .select(' name description price _id productImage merchant_id')
     .exec()
     .then(doc => {
       console.log("From database", doc);
       if (doc) {
         res.status(200).json({
-          product: doc,
-          request: {
-            type: 'GET',
-            url: 'http://localhost:3000/products/'
-          }
+          _id: doc._id,
+          name: doc.name,
+          price: doc.price,
+          description: doc.description,
+          merchant_id: doc.merchant_id
         })
       } else {
         res.status(404).json({
@@ -104,26 +103,24 @@ exports.products_get_product = (req, res, next) => {
 
 exports.products_update_product = (req, res, next) => {
   const id = req.params.productId;
-  const updateOps = {};
-  for (const ops of req.body) {
-    updateOps[ops.propName] = ops.value;
-  }
-  Product.update({ _id: id }, { $set: updateOps })
+  Product.update({ _id: id }, {
+    $set: {
+      name: req.body.name,
+      price: req.body.price,
+      description: req.body.description
+    }
+  })
     .exec()
     .then(result => {
       res.status(200).json({
-        message: 'Product updated',
-        request: {
-          type: 'GET',
-          url: 'http://localhost:3000/products/' + id
-        }
+        message: 'Product updated'
       });
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({
+      res.json({
         error: err
-      });
+      }).status(500);
     });
 }
 
@@ -133,12 +130,7 @@ exports.products_delete_product = (req, res, next) => {
     .exec()
     .then(result => {
       res.status(200).json({
-        message: 'Product deleted',
-        request: {
-          type: 'POST',
-          url: 'http://localhost:3000/products/',
-          body: { name: 'String', price: 'Number' }
-        }
+        message: 'Product deleted'
       });
     })
     .catch(err => {

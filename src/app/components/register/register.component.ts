@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 import { UserService } from 'src/app/services/user.service';
-import { GlobalVars } from 'src/app/config/api';
+import { isLogged$, isMerchant$ } from 'src/app/config/api';
 
 /**
  * 
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.buildForm();
   }
 
@@ -64,12 +64,27 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    this.userService.userRegistration(this.registerForm.value).subscribe();
-    GlobalVars.isLogged = true;
-    if (this.registerForm.value.isMerchant) {
-      GlobalVars.isMerchant = true;
-    }
-    this.router.navigate(['/shop']);
+    this.userService.userRegistration(this.registerForm.value).subscribe(res => {
+      var user = {
+        userId: res.userId,
+        username: res.username,
+        email: res.email,
+        isMerchant: res.isMerchant
+      }
+
+
+      sessionStorage.setItem("check", JSON.stringify(res.message))
+      sessionStorage.setItem("user", JSON.stringify(user))
+      sessionStorage.setItem("Authorization", JSON.stringify(res.token))
+
+
+      isLogged$.next(true);
+      if (res.isMerchant) {
+        isMerchant$.next(true);
+      }
+      this.router.navigate(['/shop']);
+    });
+
   }
 
 }
