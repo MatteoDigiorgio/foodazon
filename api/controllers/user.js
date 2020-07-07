@@ -97,6 +97,30 @@ exports.user_login = (req, res, next) => {
     });
 }
 
+exports.user_update = (req, res, next) => {
+  const id = req.params.userId;
+  User.updateOne({ _id: id }, {
+    $set: {
+      username: req.body.username,
+      email: req.body.email
+    }
+  })
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        message: 'User updated',
+        username: req.body.username,
+        email: req.body.email
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.json({
+        error: err
+      }).status(500);
+    });
+}
+
 exports.user_delete = (req, res, next) => {
   User.remove({ _id: req.params.userId })
     .exec()

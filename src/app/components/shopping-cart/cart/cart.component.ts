@@ -87,6 +87,7 @@ export class CartComponent implements OnInit {
 
 
   calcCartTotal() {
+    console.log(this.cartItems)
     this.cartTotal = 0;
     this.cartItems.forEach(item => {
       this.cartTotal += (item.qty * item.price);

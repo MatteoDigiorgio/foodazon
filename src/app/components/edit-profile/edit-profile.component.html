@@ -1,1 +1,47 @@
-<p>edit-profile works!</p>
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <div class="guest-form-card card">
+
+      <div class="card-header text-center">
+        <h2>User Profile</h2>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="editUserForm">
+
+          <div class="card-body">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input id="username" class="form-control"
+                [ngClass]="{ 'is-invalid': editUserForm.get('username').touched && editUserForm.get('username').invalid }"
+                formControlName="username" value="editUserForm.get('username')" />
+              <span class="invalid-feedback">Username can't be blank.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="email" class="form-control"
+                [ngClass]="{ 'is-invalid': editUserForm.get('email').touched && editUserForm.get('email').invalid }"
+                formControlName="email" value="editUserForm.get('email')" />
+              <span class="invalid-feedback">
+                <span *ngIf="editUserForm.get('email').hasError('required')">Email can't be blank.</span>
+              </span>
+            </div>
+
+
+            <button class="btn btn-warning btn-block" (click)="editUser()">Edit</button>
+
+            <hr>
+
+            <div class="card-body">
+              <button class="btn btn-danger btn-block" (click)="deleteUser()">DELETE PROFILE</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div>
+
+  </div>
+</div>

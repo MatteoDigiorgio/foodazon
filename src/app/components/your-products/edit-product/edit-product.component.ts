@@ -36,14 +36,13 @@ export class EditProductComponent implements OnInit {
     // var token = JSON.parse(sessionStorage.getItem("Authorization"));
     this.productService.findProduct(((document.getElementById("productCodeForEdit") as HTMLInputElement).value)).subscribe(res => {
       if (res.merchant_id === user.userId) {
-        console.log(res)
         this.editProductForm.patchValue({
           name: res.name,
           price: res.price,
           description: res.description
         })
       } else {
-        console.log("non puoi")
+        console.log("It's not your product")
       }
     })
   }

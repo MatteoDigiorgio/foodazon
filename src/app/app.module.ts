@@ -25,6 +25,7 @@ import { EditProductComponent } from 'src/app/components/your-products/edit-prod
 import { OrdersComponent } from './components/orders/orders.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { YourProductsComponent } from './components/your-products/your-products.component';
+import { OrderComponent } from './components/orders/order/order.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { YourProductsComponent } from './components/your-products/your-products.
     EditProductComponent,
     OrdersComponent,
     EditProfileComponent,
-    YourProductsComponent
+    YourProductsComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
