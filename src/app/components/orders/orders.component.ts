@@ -46,8 +46,18 @@ export class OrdersComponent implements OnInit {
   }
 
   getOrdersFromDatabase() {
-    this.orderService.getProducts().subscribe((orders) => {
-      this.orderList = orders['orders'];
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    this.orderService.getOrders().subscribe((orders) => {
+      orders.forEach(order => {
+        if (order.userId === user.userId) {
+          this.orderList.push({
+            _id: order._id,
+            product: order.product,
+            userId: order.userId
+          })
+        }
+      });
+      console.log(this.orderList)
     })
   }
 }

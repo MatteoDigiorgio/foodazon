@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "foodazon": {
+    "coffeezon": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/foodazon",
+            "outputPath": "dist/coffeezon",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "foodazon:build"
+            "browserTarget": "coffeezon:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "foodazon:build:production"
+              "browserTarget": "coffeezon:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "foodazon:build"
+            "browserTarget": "coffeezon:build"
           }
         },
         "test": {
@@ -111,16 +111,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "foodazon:serve"
+            "devServerTarget": "coffeezon:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "foodazon:serve:production"
+              "devServerTarget": "coffeezon:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "foodazon"
+  "defaultProject": "coffeezon"
 }

@@ -2,6 +2,6 @@
 
 <div *ngIf="orderList.length > 0" class="list-group">
   <div class="orders" *ngFor="let order of orderList">
-    <app-orders></app-orders>
+    <app-order [order]="order"></app-order>
   </div>
 </div>

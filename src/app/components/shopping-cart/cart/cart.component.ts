@@ -61,12 +61,11 @@ export class CartComponent implements OnInit {
 
     if (!productExists) {
       this.cartItems.push({
-        productId: product._id,
-        productName: product.name,
+        _id: product._id,
+        name: product.name,
         qty: 1,
         price: product.price,
-        merchantId: product.merchant_id,
-        status: "In Treatment"
+        merchant_id: product.merchant_id
       });
     }
     this.calcCartTotal();
@@ -100,13 +99,14 @@ export class CartComponent implements OnInit {
   }
 
   createOrder() {
-    console.log(this.cartItems)
     let user = JSON.parse(sessionStorage.getItem("user"));
-    var order = {
-      products: this.cartItems,
-      userId: user.userId
-    }
-    this.orderService.createOrder(order).subscribe();
+    this.cartItems.forEach(element => {
+      var order = {
+        product: element,
+        userId: user.userId
+      }
+      this.orderService.createOrder(order).subscribe()
+    });
     this.router.navigate(['/orders']);
   }
 }
