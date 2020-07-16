@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ProductService } from 'src/app/services/product.service';
-// import { ReloadService } from 'src/app/services/reload.service';
 
 
 @Component({
@@ -18,8 +17,7 @@ export class AddProductComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private router: Router,
-    private productService: ProductService,
-    // private reloadService: ReloadService
+    private productService: ProductService
   ) { }
 
   ngOnInit(): void {
@@ -52,7 +50,8 @@ export class AddProductComponent implements OnInit {
     formData.append('token', JSON.parse(sessionStorage.getItem("Authorization")));
     formData.append('merchant_id', user.userId);
     this.productService.addProduct(formData).subscribe();
-    // this.reloadService.reload();
-    this.router.navigate(['/shop']);
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/shop'])
   }
 }

@@ -22,13 +22,12 @@ export class RemoveProductComponent implements OnInit {
   // SISTEMARE AUTENTICAZONE
   delete() {
     var user = JSON.parse(sessionStorage.getItem("user"));
-    // const formData = new FormData();
-    // formData.append('productCode', this.model.productCode);
-    // formData.append('token', JSON.parse(sessionStorage.getItem("Authorization")));
-    // console.log(formData)
     this.productService.findProduct(this.model.productCode).subscribe(res => {
       if (res.merchant_id === user.userId) {
         this.productService.deleteProduct(this.model.productCode).subscribe()
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/shop']);
         console.log("fatto")
       } else {
         console.log("non puoi")

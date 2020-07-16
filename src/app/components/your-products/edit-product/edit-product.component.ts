@@ -27,19 +27,21 @@ export class EditProductComponent implements OnInit {
     this.editProductForm = this.builder.group({
       name: ['', Validators.required],
       price: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      token: ''
     })
   }
 
   findProduct() {
     var user = JSON.parse(sessionStorage.getItem("user"));
-    // var token = JSON.parse(sessionStorage.getItem("Authorization"));
+    var token = JSON.parse(sessionStorage.getItem("Authorization"));
     this.productService.findProduct(((document.getElementById("productCodeForEdit") as HTMLInputElement).value)).subscribe(res => {
       if (res.merchant_id === user.userId) {
         this.editProductForm.patchValue({
           name: res.name,
           price: res.price,
-          description: res.description
+          description: res.description,
+          token: token
         })
       } else {
         console.log("It's not your product")
@@ -51,5 +53,8 @@ export class EditProductComponent implements OnInit {
 
   editProduct() {
     this.productService.editProduct(((document.getElementById("productCodeForEdit") as HTMLInputElement).value), this.editProductForm.value).subscribe();
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/shop']);
   }
 }

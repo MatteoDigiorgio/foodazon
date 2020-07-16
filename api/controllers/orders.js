@@ -3,20 +3,18 @@ const Order = require('../models/order');
 
 exports.orders_get_all = (req, res, next) => {
   Order.find()
-    .select('product quantity _id')
-    .populate('product', 'name')
+    .select('_id product userId')
     .exec()
     .then(docs => {
-      res.status(200).json({
-        count: docs.length,
-        orders: docs.map(doc => {
+      res.status(200).json(
+        orders = docs.map(doc => {
           return {
             _id: doc._id,
             product: doc.product,
-            quantity: doc.quantity
+            userId: doc.userId
           }
         })
-      });
+      );
     })
     .catch(err => {
       res.status(500).json({
@@ -28,14 +26,16 @@ exports.orders_get_all = (req, res, next) => {
 exports.orders_create_order = (req, res, next) => {
   const order = new Order({
     _id: mongoose.Types.ObjectId(),
-    products: req.body.products,
+    product: req.body.product,
     userId: req.body.userId
   })
   order
     .save()
     .then(result => {
       res.json({
-        message: "ok"
+        _id: order._id,
+        product: order.product,
+        userId: order.userId
       }).status(200)
     })
     .catch(err => {
@@ -57,11 +57,7 @@ exports.orders_get_order = (req, res, next) => {
         })
       }
       res.status(200).json({
-        order: order,
-        request: {
-          type: 'GET',
-          url: 'http://localhost:3000/orders/'
-        }
+        order: order
       })
     })
     .catch(err => {
@@ -77,12 +73,7 @@ exports.orders_delete_order = (req, res, next) => {
     .exec()
     .then(result => {
       res.status(200).json({
-        message: 'Order deleted',
-        request: {
-          type: 'POST',
-          url: 'http://localhost:3000/orders/',
-          body: { productId: 'ID', quantity: 'Number' }
-        }
+        message: 'Order deleted'
       })
     })
     .catch(err => {

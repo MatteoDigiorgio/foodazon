@@ -8,7 +8,7 @@ router.post('/signup', UserController.user_signup);
 
 router.post('/login', UserController.user_login);
 
-router.patch('/:userId', UserController.user_update);
+router.patch('/:userId', checkAuth, UserController.user_update);
 
 router.delete('/:userId', UserController.user_delete);
 

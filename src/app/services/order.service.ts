@@ -12,11 +12,15 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<Order[]> {
+  getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(ordersUrl);
   }
 
   createOrder(cartItems) {
     return this.http.post<any>(ordersUrl, cartItems);
+  }
+
+  deleteOrder(orderCode): Observable<any> {
+    return this.http.delete<any>(ordersUrl + "/" + orderCode);
   }
 }
