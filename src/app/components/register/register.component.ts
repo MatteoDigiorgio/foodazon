@@ -82,6 +82,8 @@ export class RegisterComponent implements OnInit {
       if (res.isMerchant) {
         isMerchant$.next(true);
       }
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
       this.router.navigate(['/shop']);
     });
 

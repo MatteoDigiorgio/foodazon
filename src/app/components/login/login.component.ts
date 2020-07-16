@@ -47,6 +47,8 @@ export class LoginComponent implements OnInit {
           isMerchant$.next(true);
         }
         isLogged$.next(true);
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
         this.router.navigate(['/shop']);
       } else if (message === "Auth failed") {
         this.authFailed = true;

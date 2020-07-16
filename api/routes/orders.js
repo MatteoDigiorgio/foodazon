@@ -6,7 +6,7 @@ const OrdersController = require('../controllers/orders')
 
 router.get('/', OrdersController.orders_get_all);
 
-router.post('/', OrdersController.orders_create_order);
+router.post('/', checkAuth, OrdersController.orders_create_order);
 
 router.get('/:orderId', OrdersController.orders_get_order);
 

@@ -30,7 +30,7 @@ export class OrdersComponent implements OnInit {
       }
       isLogged$.next(true);
     }
-
+    this.ngAfterViewInit();
     this.getOrdersFromDatabase();
   }
 
@@ -46,8 +46,34 @@ export class OrdersComponent implements OnInit {
   }
 
   getOrdersFromDatabase() {
-    this.orderService.getProducts().subscribe((orders) => {
-      this.orderList = orders['orders'];
-    })
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    if (this.isMerchant) {
+      this.orderService.getOrders().subscribe((orders) => {
+        orders.forEach(order => {
+          console.log(order)
+          if (order.product.merchant_id === user.userId) {
+
+            console.log('1')
+            this.orderList.push({
+              _id: order._id,
+              product: order.product,
+              userId: order.userId
+            })
+          }
+        });
+      })
+    } else if (!this.isMerchant) {
+      this.orderService.getOrders().subscribe((orders) => {
+        orders.forEach(order => {
+          if (order.userId === user.userId) {
+            this.orderList.push({
+              _id: order._id,
+              product: order.product,
+              userId: order.userId
+            })
+          }
+        });
+      })
+    }
   }
 }

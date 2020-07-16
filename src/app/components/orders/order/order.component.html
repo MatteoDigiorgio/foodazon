@@ -1,11 +1,32 @@
-<div class="order clearfix">
-  <span>codice</span> x
-  <span>stato</span>:
-  <strong>costo</strong>
-  <div class="d-flex justify-content-between align-items-center">
-
-    <button type="button" class="details btn btn-danger btn-sm" aria-label="Details" (click)="details()">
-      Details
-    </button>
-  </div>
-</div>
+<table class="table table-bordered" style="table-layout: fixed">
+  <thead class="table-primary">
+    <tr>
+      <th class="table-header" rowspan="2">Order Number </th>
+      <th class="table-header" colspan="3">Product</th>
+      <th class="table-header" rowspan="2">Delete</th>
+    </tr>
+    <tr>
+      <th class="table-header">Name</th>
+      <th class="table-header">Price</th>
+      <th class="table-header">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="table-body">{{ order._id }}</td>
+      <td class="table-body">{{ order.product.name }}</td>
+      <td class="table-body">{{ order.product.price  | currency:'EUR' }}</td>
+      <td class="table-body">{{ order.product.qty }}</td>
+      <td>
+        <button type="button" class="plus btn btn-danger btn-lg btn-block align-self-end" aria-label="Order"
+          (click)="deleteOrder()">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
+          </svg>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
