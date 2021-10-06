@@ -16,6 +16,12 @@ export class NavComponent implements OnInit {
   constructor(private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+
+  }
+
+  logout() {
+    sessionStorage.clear();
+    this.isLogged = false;
   }
 
   ngAfterViewInit() {

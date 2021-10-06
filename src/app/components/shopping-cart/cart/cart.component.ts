@@ -52,7 +52,7 @@ export class CartComponent implements OnInit {
     let productExists = false;
 
     for (let i in this.cartItems) {
-      if (this.cartItems[i]._id === product._id) {
+      if (this.cartItems[i].productId === product._id) {
         this.cartItems[i].qty++;
         productExists = true;
         break;

@@ -8,6 +8,7 @@
 
       <div class="card-body">
         <form #loginForm="ngForm" (ngSubmit)="loginForm.valid && login()">
+
           <div *ngIf="authFailed" class="alert alert-danger" role="alert">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-exclamation-circle" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +34,15 @@
             <span class="invalid-feedback">Password can't be blank.</span>
           </div>
 
-          <button class="btn btn-primary btn-block" [disabled]="loginForm.invalid">Login</button>
+          <button class="btn btn-primary btn-block" [disabled]="loginForm.invalid" (click)="toggleLoading()">
+            <div *ngIf="isLoading else loginButton">
+              <div class="spinner-border spinner-border-sm text-light" role="status">
+              </div>
+            </div>
+            <ng-template #loginButton>
+              Login
+            </ng-template>
+          </button>
         </form>
       </div>
     </div>

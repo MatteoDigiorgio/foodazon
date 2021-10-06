@@ -24,7 +24,7 @@
               formControlName="email" />
             <span class="invalid-feedback">
               <span *ngIf="registerForm.get('email').hasError('required')">Email can't be blank.</span>
-              <span *ngIf="registerForm.get('email').hasError('email')">Email must be valid.</span>
+              <span *ngIf="registerForm.get('email').hasError('pattern')">Email must be valid.</span>
             </span>
           </div>
 

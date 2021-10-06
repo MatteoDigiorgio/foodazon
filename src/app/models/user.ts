@@ -5,7 +5,7 @@ export class User {
   isMechant: boolean;
   token: string;
 
-  constructor(_id, nausername, email, isMechant, token) {
+  constructor(_id, username, email, isMechant, token) {
     this._id = _id
     this.username = this.username
     this.email = email

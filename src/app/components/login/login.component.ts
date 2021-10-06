@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
 
   authFailed;
 
+  isLoading = false;
+
   constructor(
     private router: Router,
     private userService: UserService
@@ -42,7 +44,7 @@ export class LoginComponent implements OnInit {
       sessionStorage.setItem("user", JSON.stringify(user))
       sessionStorage.setItem("Authorization", JSON.stringify(res.token))
 
-      if (message === "Auth successfum") {
+      if (message === "Auth successful") {
         if (user.isMerchant) {
           isMerchant$.next(true);
         }
@@ -52,7 +54,13 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/shop']);
       } else if (message === "Auth failed") {
         this.authFailed = true;
+        this.model.password = null;
+        this.isLoading = false;
       }
     })
+  }
+
+  toggleLoading = () => {
+    this.isLoading = true;
   }
 }
