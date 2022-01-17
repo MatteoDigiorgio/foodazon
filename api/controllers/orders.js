@@ -3,15 +3,17 @@ const Order = require('../models/order');
 
 exports.orders_get_all = (req, res, next) => {
   Order.find()
-    .select('_id product userId')
+    .select('_id date product userId total')
     .exec()
     .then(docs => {
       res.status(200).json(
         orders = docs.map(doc => {
           return {
             _id: doc._id,
+            date: doc.date,
+            userId: doc.userId,
             product: doc.product,
-            userId: doc.userId
+            total: doc.total
           }
         })
       );
@@ -26,16 +28,20 @@ exports.orders_get_all = (req, res, next) => {
 exports.orders_create_order = (req, res, next) => {
   const order = new Order({
     _id: mongoose.Types.ObjectId(),
+    date: req.body.date,
+    userId: req.body.userId,
     product: req.body.product,
-    userId: req.body.userId
+    total: req.body.total
   })
   order
     .save()
     .then(result => {
       res.json({
         _id: order._id,
+        date: order.date,
+        userId: order.userId,
         product: order.product,
-        userId: order.userId
+        total: order.total
       }).status(200)
     })
     .catch(err => {

@@ -64,6 +64,8 @@ export class CartComponent implements OnInit {
         productId: product._id,
         name: product.name,
         qty: 1,
+        image: product.image,
+        description: product.description,
         price: product.price,
         merchant_id: product.merchant_id
       });
@@ -101,14 +103,17 @@ export class CartComponent implements OnInit {
   createOrder() {
     let user = JSON.parse(sessionStorage.getItem("user"));
     var token = JSON.parse(sessionStorage.getItem("Authorization"));
+    var order = {
+      token: token,
+      date: Date(),
+      userId: user.userId,
+      product: [],
+      total: this.cartTotal
+    }
     this.cartItems.forEach(element => {
-      var order = {
-        product: element,
-        userId: user.userId,
-        token: token
-      }
-      this.orderService.createOrder(order).subscribe()
+      order.product.push(element)
     });
+    this.orderService.createOrder(order).subscribe()
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/orders']);
