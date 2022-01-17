@@ -50,26 +50,30 @@ export class OrdersComponent implements OnInit {
     if (this.isMerchant) {
       this.orderService.getOrders().subscribe((orders) => {
         orders.forEach(order => {
-          console.log(order)
-          if (order.product.merchant_id === user.userId) {
-
-            console.log('1')
-            this.orderList.push({
-              _id: order._id,
-              product: order.product,
-              userId: order.userId
-            })
-          }
+          order.product.forEach(product => {
+            console.log(product)
+            if (product.merchant_id === user.userId) {
+              this.orderList.unshift({
+                _id: order._id,
+                date: order.date,
+                userId: order.userId,
+                product: order.product,
+                total: order.total
+              })
+            }
+          })
         });
       })
     } else if (!this.isMerchant) {
       this.orderService.getOrders().subscribe((orders) => {
         orders.forEach(order => {
           if (order.userId === user.userId) {
-            this.orderList.push({
+            this.orderList.unshift({
               _id: order._id,
+              date: order.date,
+              userId: order.userId,
               product: order.product,
-              userId: order.userId
+              total: order.total
             })
           }
         });

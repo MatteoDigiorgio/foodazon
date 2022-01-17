@@ -1,32 +1,69 @@
-<table class="table table-bordered" style="table-layout: fixed">
-  <thead class="table-primary">
-    <tr>
-      <th class="table-header" rowspan="2">Order Number </th>
-      <th class="table-header" colspan="3">Product</th>
-      <th class="table-header" rowspan="2">Delete</th>
-    </tr>
-    <tr>
-      <th class="table-header">Name</th>
-      <th class="table-header">Price</th>
-      <th class="table-header">Quantity</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="table-body">{{ order._id }}</td>
-      <td class="table-body">{{ order.product.name }}</td>
-      <td class="table-body">{{ order.product.price  | currency:'EUR' }}</td>
-      <td class="table-body">{{ order.product.qty }}</td>
-      <td>
-        <button type="button" class="plus btn btn-danger btn-lg btn-block align-self-end" aria-label="Order"
-          (click)="deleteOrder()">
-          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-              d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
-          </svg>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="card mb-4">
+
+  <div class=" card-header bg-primary text-white">
+    <div class="row align-items-center text-center m-auto">
+      <div class="col-sm-4">
+        <p class="text-left m-0">ORDER PLACED</p>
+        <p class="text-left m-0">{{ localeDate }}</p>
+      </div>
+      <div class="col-sm-2 text-left">
+        <p class="m-0">TOTAL</p>
+        <p class="m-0">{{ order.total.toFixed(2) }}</p>
+      </div>
+      <div class="col-sm-6">
+        <p class="text-right m-0">ORDER # {{ order._id }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body p-4" *ngFor="let protuct of order.product; index as i">
+    <div class="row align-items-center text-center m-auto">
+      <div class="col-sm-2">
+        <img width="100px" class="img-fluid rounded-start" src="uploads/">
+      </div>
+      <div class="col-sm-8">
+        <h5 class="card-title">{{ order.product[i].name }} x {{ order.product[i].qty }}</h5>
+        <p class="card-text">{{ order.product[i].price| currency:'EUR' }}</p>
+      </div>
+      <div class="col-sm-2">
+        <span class="badge text-white bg-success">Delivered</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer text-center p-0">
+    <button type="button" class="plus btn btn-outline-danger btn-lg m-1" aria-label="Order" (click)="open(content)">
+      Delete Order
+    </button>
+  </div>
+
+  <ng-template #content let-c="close" let-d="dismiss">
+
+    <div class="modal-header flex-column text-center" style="border-bottom: 0">
+      <div class="icon-box"
+        style="  width: 80px; height: 80px; margin: 20px auto; border-radius: 50%; z-index: 9; text-align: center; border: 3px solid #f15e5e;">
+        <i class="material-icons"
+          style="color: #f15e5e; font-size: 46px; display: inline-block; margin-top: 13px;">&#xE5CD;</i>
+      </div>
+      <h4 class="modal-title w-100" id="modal-title w-100">Are you sure?</h4>
+      <button type="button" class="close m-0 p-0" aria-label="Close" style="position: absolute; top: 10px; right: 13px;"
+        (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" style="text-align:center">
+      <p>Do you really want to delete this order? This process cannot be undone.</p>
+    </div>
+    <div class="modal-footer justify-content-center" style="border-top: 0">
+      <button type="button" class="plus btn btn-danger btn-lg m-1" (click)="deleteOrder()" (click)="c('Save click')">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
+        </svg>
+      </button>
+    </div>
+
+  </ng-template>
+
+</div>

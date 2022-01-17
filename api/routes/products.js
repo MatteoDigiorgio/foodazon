@@ -18,7 +18,7 @@ const upload = multer({ storage: storage })
 
 router.get('/', ProductsController.products_get_all);
 
-router.post('/', upload.single('file'), checkAuth, ProductsController.products_create_product);
+router.post('/', upload.single('image'), checkAuth, ProductsController.products_create_product);
 
 router.get('/:productId', ProductsController.products_get_product);
 

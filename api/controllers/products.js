@@ -1,9 +1,10 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const Product = require('../models/product');
+const fs = require('fs');
 
 exports.products_get_all = (req, res, next) => {
   Product.find()
-    .select('name price _id description productImage merchant_id')
+    .select('name price _id description image merchant_id')
     .exec()
     .then(docs => {
       const response = {
@@ -13,7 +14,7 @@ exports.products_get_all = (req, res, next) => {
             name: doc.name,
             price: doc.price,
             description: doc.description,
-            productImage: doc.productImage,
+            image: doc.image,
             _id: doc._id,
             merchant_id: doc.merchant_id
           }
@@ -36,15 +37,15 @@ exports.products_get_all = (req, res, next) => {
 }
 
 exports.products_create_product = (req, res, next) => {
-  console.log(req.file)
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
     price: req.body.price,
     description: req.body.description,
-    productImage: req.file.destination + "/" + req.file.filename,
+    image: req.file.destination + "/" + req.file.filename,
     merchant_id: req.body.merchant_id
   });
+  console.log(product);
   product
     .save()
     .then(result => {
@@ -56,6 +57,7 @@ exports.products_create_product = (req, res, next) => {
           name: result.name,
           price: result.price,
           description: result.description,
+          image: result.image,
           merchant_id: result.merchant_id
         }
       });
@@ -72,7 +74,7 @@ exports.products_create_product = (req, res, next) => {
 exports.products_get_product = (req, res, next) => {
   const id = req.params.productId;
   Product.findById(id)
-    .select(' name description price _id productImage merchant_id')
+    .select(' name description price _id image merchant_id')
     .exec()
     .then(doc => {
       console.log("From database", doc);
@@ -81,6 +83,7 @@ exports.products_get_product = (req, res, next) => {
           _id: doc._id,
           name: doc.name,
           price: doc.price,
+          img: doc.image,
           description: doc.description,
           merchant_id: doc.merchant_id
         })

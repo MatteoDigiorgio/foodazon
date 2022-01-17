@@ -25,6 +25,7 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { YourProductsComponent } from './components/your-products/your-products.component';
 import { OrderComponent } from './components/orders/order/order.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { OrderComponent } from './components/orders/order/order.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
