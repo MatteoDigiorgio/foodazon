@@ -12,11 +12,13 @@ export class NavComponent implements OnInit {
 
   isLogged = false;
   isMerchant = false;
+  username;
 
   constructor(private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    this.username = user.username;
   }
 
   logout() {

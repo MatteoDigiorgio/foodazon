@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Order = require('../models/order');
 
 exports.orders_get_all = (req, res, next) => {
-  Order.find()
+  Order.find().or([{ 'userId': req.params.userId }, { 'product.merchant_id': req.params.userId }])
     .select('_id date product userId total')
     .exec()
     .then(docs => {
@@ -43,28 +43,6 @@ exports.orders_create_order = (req, res, next) => {
         product: order.product,
         total: order.total
       }).status(200)
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        error: err
-      })
-    });
-}
-
-exports.orders_get_order = (req, res, next) => {
-  Order.findById(req.params.orderId)
-    .populate('product')
-    .exec()
-    .then(order => {
-      if (!order) {
-        return res.status(404).json({
-          message: 'Order not found'
-        })
-      }
-      res.status(200).json({
-        order: order
-      })
     })
     .catch(err => {
       console.log(err);

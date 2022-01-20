@@ -47,37 +47,16 @@ export class OrdersComponent implements OnInit {
 
   getOrdersFromDatabase() {
     let user = JSON.parse(sessionStorage.getItem("user"));
-    if (this.isMerchant) {
-      this.orderService.getOrders().subscribe((orders) => {
-        orders.forEach(order => {
-          order.product.forEach(product => {
-            console.log(product)
-            if (product.merchant_id === user.userId) {
-              this.orderList.unshift({
-                _id: order._id,
-                date: order.date,
-                userId: order.userId,
-                product: order.product,
-                total: order.total
-              })
-            }
-          })
-        });
-      })
-    } else if (!this.isMerchant) {
-      this.orderService.getOrders().subscribe((orders) => {
-        orders.forEach(order => {
-          if (order.userId === user.userId) {
-            this.orderList.unshift({
-              _id: order._id,
-              date: order.date,
-              userId: order.userId,
-              product: order.product,
-              total: order.total
-            })
-          }
-        });
-      })
-    }
+    this.orderService.getOrders(user.userId).subscribe((orders) => {
+      orders.forEach(order => {
+        this.orderList.unshift({
+          _id: order._id,
+          date: order.date,
+          userId: order.userId,
+          product: order.product,
+          total: order.total
+        })
+      });
+    })
   }
 }

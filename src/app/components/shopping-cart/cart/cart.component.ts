@@ -113,7 +113,7 @@ export class CartComponent implements OnInit {
     this.cartItems.forEach(element => {
       order.product.push(element)
     });
-    this.orderService.createOrder(order).subscribe()
+    this.orderService.createOrder(order, user.userId).subscribe()
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/orders']);
