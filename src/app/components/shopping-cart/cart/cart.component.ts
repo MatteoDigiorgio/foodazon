@@ -111,6 +111,7 @@ export class CartComponent implements OnInit {
       total: this.cartTotal
     }
     this.cartItems.forEach(element => {
+      element.status = 'Ordered'
       order.product.push(element)
     });
     this.orderService.createOrder(order, user.userId).subscribe()

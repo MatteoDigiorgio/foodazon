@@ -4,7 +4,7 @@ export class Order {
   _id: string
   date: Date
   userId: string
-  product: [Product]
+  product: Array<any>
   total: number
 
   constructor(_id, date, userId, product, total) {
