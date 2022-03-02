@@ -7,7 +7,8 @@ const OrdersController = require('../controllers/orders')
 router
   .route('/:userId')
   .get(OrdersController.orders_get_all)
-  .post(checkAuth, OrdersController.orders_create_order);
+  .post(checkAuth, OrdersController.orders_create_order)
+  .patch(OrdersController.orders_patch_product_order_status);
 
 router
   .route('/:orderId')

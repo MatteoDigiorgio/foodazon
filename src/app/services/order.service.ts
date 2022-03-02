@@ -20,6 +20,10 @@ export class OrderService {
     return this.http.post<any>(ordersUrl + "/" + userId, cartItems);
   }
 
+  updateProductOrderStatus(params, userId) {
+    return this.http.patch<any>(ordersUrl + "/" + userId, params);
+  }
+
   deleteOrder(orderCode): Observable<any> {
     return this.http.delete<any>(ordersUrl + "/" + orderCode);
   }

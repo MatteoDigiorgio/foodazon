@@ -18,6 +18,8 @@ export class OrderComponent implements OnInit {
 
   URL = 'http://localhost:3000/';
 
+  user = JSON.parse(sessionStorage.getItem("user"));
+
   constructor(
     private router: Router,
     private orderService: OrderService,
@@ -38,9 +40,21 @@ export class OrderComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
 
+  changeProductOrderStatus(i, newStatus) {
+    var params = {
+      orderCode: this.order._id,
+      productCode: this.order.product[i].productId,
+      newStatus: newStatus
+    }
+    this.orderService.updateProductOrderStatus(params, this.user.userId).subscribe()
+    this.reloadComponent()
+  }
+
   deleteOrder() {
-    this.orderService.deleteOrder(this.order._id).subscribe()
-    this.reloadComponent();
+    if (!this.user.isMerchant) {
+      this.orderService.deleteOrder(this.order._id).subscribe()
+      this.reloadComponent();
+    }
   }
 
   reloadComponent() {
