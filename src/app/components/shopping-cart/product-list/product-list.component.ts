@@ -2,7 +2,7 @@ import { Component, OnInit, NgModule } from '@angular/core';
 
 import { Product } from 'src/app/models/product'
 import { ProductService } from 'src/app/services/product.service';
-
+import { textInSearchbox } from 'src/app/config/api';
 
 @Component({
   selector: 'app-product-list',
@@ -18,12 +18,12 @@ export class ProductListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getProductFromDatabase();
+    this.getProductsFromDatabase();
   }
 
 
-  getProductFromDatabase() {
-    this.productService.getProducts().subscribe((products) => {
+  getProductsFromDatabase() {
+    this.productService.getProducts(textInSearchbox.value).subscribe((products) => {
       this.productList = products['products'];
     })
   }

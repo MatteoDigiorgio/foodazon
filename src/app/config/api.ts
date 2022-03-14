@@ -11,4 +11,5 @@ export const ordersUrl = baseUrl + '/orders';
 
 export const isLogged$ = new BehaviorSubject(false);
 export const isMerchant$ = new BehaviorSubject(false);
+export const textInSearchbox = new BehaviorSubject('');
 

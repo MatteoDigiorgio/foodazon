@@ -78,6 +78,11 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  logout() {
+    sessionStorage.clear();
+    this.isLogged = false;
+  }
+
   deleteUser() {
     let user = JSON.parse(sessionStorage.getItem("user"));
     this.userService.userDelete(user.userId).subscribe();
