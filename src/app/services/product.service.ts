@@ -13,8 +13,8 @@ export class ProductService {
   constructor(
     private http: HttpClient) { }
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(productsUrl);
+  getProducts(textTyped): Observable<any> {
+    return this.http.get<any>(productsUrl + "/" + textTyped);
   }
 
   addProduct(addProductForm): Observable<any> {

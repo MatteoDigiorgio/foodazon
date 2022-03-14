@@ -1,9 +1,15 @@
 const mongoose = require('mongoose');
 const Product = require('../models/product');
-const fs = require('fs');
 
-exports.products_get_all = (req, res, next) => {
-  Product.find()
+exports.products_get_products = (req, res, next) => {
+
+  if (Object.keys(req.params).length > 0) {
+    filter = { name: { $regex: req.params.textTyped, $options: 'i' } }
+  } else {
+    filter = {}
+  }
+
+  Product.find(filter)
     .select('name price _id description image merchant_id')
     .exec()
     .then(docs => {

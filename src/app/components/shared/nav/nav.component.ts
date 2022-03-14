@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { isLogged$, isMerchant$ } from 'src/app/config/api';
+import { isLogged$, isMerchant$, textInSearchbox } from 'src/app/config/api';
 import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,18 +14,26 @@ export class NavComponent implements OnInit {
   isLogged = false;
   isMerchant = false;
   username;
+  textInSearchbox;
 
-  constructor(private ref: ChangeDetectorRef) { }
+  constructor(
+    private ref: ChangeDetectorRef,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     let user = JSON.parse(sessionStorage.getItem("user"));
     this.username = user.username;
   }
 
-  logout() {
-    sessionStorage.clear();
-    this.isLogged = false;
+  search() {
+    console.log(textInSearchbox.value.length)
+    textInSearchbox.next(((document.getElementById("textTyped") as HTMLInputElement).value))
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/shop'])
   }
+
 
   ngAfterViewInit() {
     isLogged$.subscribe(result => {
@@ -35,6 +44,10 @@ export class NavComponent implements OnInit {
       this.isMerchant = result;
       this.ref.detectChanges();
     });
+    textInSearchbox.subscribe(result => {
+      this.textInSearchbox = result;
+      this.ref.detectChanges();
+    })
   }
 }
 
